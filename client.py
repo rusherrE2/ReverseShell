@@ -59,17 +59,20 @@ def main():
             print("[!] Connection lost.")
             break
 
-        # Получение данных
-        data = b""
+        # Получение ответа от сервера до [done]
+        response = b""
         while True:
             chunk = s.recv(2048)
-            if not chunk or b"[done]" in chunk:
-                data += chunk
+            if not chunk:
                 break
-            data += chunk
-
-        output = data.decode(errors="ignore").replace("[done]", "")
+            response += chunk
+            if b"[done]" in response:
+                break
+        
+        # Удаляем маркер конца и выводим результат
+        output = response.decode(errors="ignore").replace("[done]", "").strip()
         print(output)
+
 
     s.close()
     print("[-] Disconnected.")
