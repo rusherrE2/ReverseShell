@@ -7,8 +7,8 @@ def is_empty_or_whitespace(s):
 
 def main():
     server_ip = input("Enter server IP (default 127.0.0.1): ").strip() or "127.0.0.1"
-    port_input = input("Enter server port (default 5555): ").strip()
-    server_port = int(port_input) if port_input.isdigit() else 5555
+    port_input = input("Enter server port (default 29000): ").strip()
+    server_port = int(port_input) if port_input.isdigit() else 29000
 
     try:
         s = socket.socket()
