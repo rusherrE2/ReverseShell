@@ -36,7 +36,7 @@ def main():
         if cmd.lower() == "cls":
             os.system("clear")
             continue
-
+    
         # Отправляем команду как есть (в том числе cd)
         try:
             s.sendall(cmd.encode())
@@ -44,7 +44,16 @@ def main():
             print("[!] Connection lost.")
             break
 
-        # Получение данных до [done]
+        # Добавляем chcp 65001 к команде перед отправкой
+        final_cmd = f"chcp 65001 >nul && {cmd}"
+
+        try:
+            s.sendall(final_cmd.encode())
+        except:
+            print("[!] Connection lost.")
+            break
+
+        # Получаем данные до [done]
         response = b""
         while True:
             chunk = s.recv(2048)
@@ -54,7 +63,6 @@ def main():
             if b"[done]" in response:
                 break
 
-        # Вывод ответа
         output = response.decode(errors="ignore").replace("[done]", "").strip()
         print(output)
 
