@@ -36,14 +36,7 @@ def main():
         if cmd.lower() == "cls":
             os.system("clear")
             continue
-    
-        # Отправляем команду как есть (в том числе cd)
-        try:
-            s.sendall(cmd.encode())
-        except:
-            print("[!] Connection lost.")
-            break
-
+            
         # Добавляем chcp 65001 к команде перед отправкой
         final_cmd = f"chcp 65001 >nul && {cmd}"
 
